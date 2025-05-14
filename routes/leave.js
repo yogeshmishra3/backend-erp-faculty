@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
-const Faculty = require("../models/Faculty");
+// const Faculty = require("../models/Faculty");
 const Leave = require("../models/Leave");
 const Principal = require("../models/Principal");
 const LeaveSummary = require("../models/LeaveSummary");
