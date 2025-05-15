@@ -343,6 +343,27 @@ const markAttendance = async (req, res) => {
   }
 };
 
+
+
+const getLastEmployeeId = async (req, res) => {
+  const { type } = req.query;
+
+  try {
+    const lastFaculty = await Faculty.find({ type })
+      .sort({ employeeId: -1 })
+      .limit(1);
+
+    if (!lastFaculty.length) {
+      return res.json({ lastEmployeeId: null });
+    }
+
+    res.json({ lastEmployeeId: lastFaculty[0].employeeId });
+  } catch (err) {
+    console.error("Error fetching last ID:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   facultyRegister,
   staffLogin,
@@ -351,4 +372,5 @@ module.exports = {
   getStudent,
   markAttendance,
   getFaculties,
-};
+  getLastEmployeeId,
+}

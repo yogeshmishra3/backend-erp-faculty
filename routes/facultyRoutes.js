@@ -8,6 +8,7 @@ const {
   getStudent,
   markAttendance,
   getFaculties,
+  getLastEmployeeId,
 } = require("../controllers/facultyController");
 
 // Faculty routes
@@ -18,5 +19,6 @@ router.put("/update/:email", updateFaculty);
 router.post("/getstudent", getStudent);
 router.post("/markattendance", markAttendance);
 router.get("/faculties", getFaculties);
+router.get("/last-id", getLastEmployeeId);
 
 module.exports = router;
