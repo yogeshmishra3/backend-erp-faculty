@@ -90,7 +90,7 @@ cron.schedule("0 0 * * *", async () => {
   }
 });
 
-// Global Error Handler (fallback)
+
 app.use((err, req, res, next) => {
   console.error("Global error:", err.stack);
   res.status(500).json({ error: "Something went wrong!" });

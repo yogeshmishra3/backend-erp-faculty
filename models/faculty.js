@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const facultySchema = new mongoose.Schema({
@@ -6,7 +5,7 @@ const facultySchema = new mongoose.Schema({
   employeeId: { type: String, required: true },
   department: { type: String, required: true },
   designation: { type: String },
-  type: { type: String, enum: ["teaching", "non-teaching"], required: true },
+  type: { type: String, enum: ["teaching", "non-teaching","Head of Department","faculty-management","principal"], required: true },
   status: { type: String, default: "Active" },
   email: { type: String },
   mobile: { type: String },
@@ -24,6 +23,7 @@ const facultySchema = new mongoose.Schema({
   technicalSkills: { type: [String] },
   researchPublications: { type: [String] },
   isHOD: { type: Boolean, default: false },
+  password: { type: String, required: true }, 
 });
 
 module.exports = mongoose.model("Faculty", facultySchema);

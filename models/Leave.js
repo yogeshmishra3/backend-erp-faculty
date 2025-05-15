@@ -16,7 +16,6 @@ const leaveSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: [
-      //68219e3bc2a0a45aac68ebb6
       "Pending",
       "HOD Approved",
       "HOD Rejected",

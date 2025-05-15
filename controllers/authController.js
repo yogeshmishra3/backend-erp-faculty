@@ -6,7 +6,7 @@ const registerUser = async (req, res) => {
   const {
     username,
     email,
-    password,
+    // remove password from destructuring since we generate it
     role,
     firstName,
     lastName,
@@ -28,14 +28,23 @@ const registerUser = async (req, res) => {
     technicalSkills,
     workExperience,
   } = req.body;
+
   try {
-    let user = await User.findOne({ email });
-    if (user) {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user = new User({
+    // Generate password from dateOfBirth by removing special characters
+    const rawPassword = dateOfBirth || "";
+    const cleanPassword = rawPassword.replace(/[^a-zA-Z0-9]/g, "");
+
+    // Hash the cleaned password
+    const hashedPassword = await bcrypt.hash(cleanPassword, 10);
+
+    // Create new user with hashed password
+    const user = new User({
       username,
       email,
       password: hashedPassword,
@@ -66,10 +75,11 @@ const registerUser = async (req, res) => {
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    console.error(error);
+    console.error("Register Error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 const login = async (req, res) => {
   const { employeeId, password } = req.body;
@@ -173,9 +183,8 @@ const updateUserProfile = async (req, res) => {
     user.email = email || user.email;
     user.firstName = firstName || user.firstName;
     user.lastName = lastName || user.lastName;
-    user.name = `${firstName || user.firstName} ${
-      lastName || user.lastName
-    }`.trim();
+    user.name = `${firstName || user.firstName} ${lastName || user.lastName
+      }`.trim();
     user.employeeId = employeeId || user.employeeId;
     user.gender = gender || user.gender;
     user.dateOfBirth = dateOfBirth || user.dateOfBirth;

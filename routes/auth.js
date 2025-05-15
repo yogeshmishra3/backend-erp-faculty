@@ -32,4 +32,3 @@ router.put("/profile", authMiddleware, updateUserProfile);
 
 module.exports = router;
 
-// module.exports = authMiddleware;
